@@ -1,10 +1,10 @@
 import { useRef, useState } from "react"
-import { EnumPlayerQuality } from "./playertypes"
+import { EnumPlayerQuality, HTMLCustomVideoElement } from "./playertypes"
 
 const SKIP_SECONDS_TIME = 15
 
 export function Player(){
-    const playerRef = useRef<HTMLVideoElement>(null)
+    const playerRef = useRef<HTMLCustomVideoElement>(null)
     const [isPlaying, setIsPlaying] = useState(false)
     const [quality, setQuality] = useState(EnumPlayerQuality['1080p'])
 
@@ -25,6 +25,29 @@ export function Player(){
       } else {
         playerRef.current.currentTime -= SKIP_SECONDS_TIME
       }
+    }
+
+    const toggleFullScreen = () => {
+        if(!playerRef.current) return
+
+        if(playerRef.current.requestFullscreen){
+            playerRef.current.requestFullscreen()
+        } else if(playerRef.current?.mozRequestFullScreen){
+            playerRef.current.mozRequestFullScreen()
+        } else if(playerRef.current?.webkitRequestFullScreen){
+            playerRef.current.webkitRequestFullScreen()
+        } else if(playerRef.current.msRequestFullScreen){
+            playerRef.current.msRequestFullScreen()
+        }
+    }
+
+    const changeQuality = (quality: EnumPlayerQuality) => {
+        if(!playerRef.current) return 
+        setQuality(quality)
+
+        playerRef.current.src = '/'
+        playerRef.current.play()
+        setIsPlaying(true)
     }
 
     return(
