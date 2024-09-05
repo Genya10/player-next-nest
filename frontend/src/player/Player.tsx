@@ -1,5 +1,6 @@
-import { Maximize } from "lucide-react"
+import { Maximize, RotateCw } from "lucide-react"
 import { usePlayer } from "./usePlayer"
+import { Play, Pause, RotateCcw} from 'lucide-react'
 
 export function Player(){
     const player = usePlayer()
@@ -24,9 +25,15 @@ export function Player(){
             />
             <div className="flex items-center justify-between p-3 bg-[#506f7d]">
                 <div>
-                <button>
-
+                <button onClick={togglePlayPause}>
+                 {isPlaying ? <Pause/> : <Play/>}
                 </button> 
+                <button onClick={()=> skipTime('backward')}>
+                    <RotateCcw/>
+                </button>
+                <button onClick={()=> skipTime('forward')}>
+                    <RotateCw/>
+                </button>
                 </div>
                <div>
                 <button onClick={toggleFullScreen}>
