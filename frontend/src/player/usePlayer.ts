@@ -6,7 +6,7 @@ import { EnumPlayerQuality, HTMLCustomVideoElement } from "./playertypes"
 const SKIP_SECONDS_TIME = 15
 
 export function usePlayer(){
-    console.log('usePlayer function is called')
+
     const playerRef = useRef<HTMLCustomVideoElement>(null)
     const [isPlaying, setIsPlaying] = useState(false)
     const [quality, setQuality] = useState(EnumPlayerQuality['1080p'])

@@ -19,7 +19,10 @@ export function SelectQuality({currentValue, onChange}: IProps){
 
     return (
     <div>
-      <button>{currentValue}</button>
+      <button
+            onClick={()=> setIsShow(!isShow)}
+            className='flex items-center gap-1'>
+                {currentValue}</button>
       <ul ref={ref}>
         {QUALITIES.map(quality => (
             <li key={quality}>

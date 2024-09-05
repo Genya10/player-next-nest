@@ -1,6 +1,9 @@
+'use client'
+
 import { Maximize, RotateCw } from "lucide-react"
 import { usePlayer } from "./usePlayer"
 import { Play, Pause, RotateCcw} from 'lucide-react'
+import { SelectQuality } from "./SelectQuality"
 
 export function Player(){
     const player = usePlayer()
@@ -14,14 +17,14 @@ export function Player(){
         togglePlayPause,
         toggleFullScreen
     } = usePlayer()
-
+    
     return(
         <div className="max-w-xl mx-auto relative rounded-lg overflow-hidden">
             <video 
               ref={playerRef}
               className='w-full h-full object-cover'
               controls={false}
-              src='/'
+              src='/scorpions.mp4'
             />
             <div className="flex items-center justify-between p-3 bg-[#506f7d]">
                 <div>
@@ -36,6 +39,7 @@ export function Player(){
                 </button>
                 </div>
                <div>
+                <SelectQuality currentValue={quality} onChange={changeQuality}/>
                 <button onClick={toggleFullScreen}>
                  <Maximize/>
                 </button>
