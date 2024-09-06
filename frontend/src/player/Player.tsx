@@ -26,7 +26,7 @@ export function Player(){
               controls={false}
               src='/scorpions.mp4'
             />
-            <div className="flex items-center justify-between p-3 bg-[#506f7d]">
+            <div className="flex items-center justify-between p-3 bg-dark-700">
                 <div>
                 <button onClick={togglePlayPause}>
                  {isPlaying ? <Pause/> : <Play/>}

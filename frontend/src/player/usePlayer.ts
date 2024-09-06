@@ -48,7 +48,7 @@ export function usePlayer(){
         if(!playerRef.current) return 
         setQuality(quality)
 
-        playerRef.current.src = '/'
+        playerRef.current.src = '/scorpions.mp4'
         playerRef.current.play()
         setIsPlaying(true)
     }
