@@ -1,6 +1,6 @@
 import { EnumPlayerQuality } from "./playertypes"
 import { useOutside } from "@/hooks/useOutside"
-import { ChevronDown } from 'lucide-react'
+import { ChevronUp } from 'lucide-react'
 import cn from 'clsx'
 
 const QUALITIES:EnumPlayerQuality[] = [
@@ -19,14 +19,16 @@ export function SelectQuality({currentValue, onChange}: IProps){
     const {isShow, ref, setIsShow} = useOutside(false)
 
     return (
-    <div className="relative">
+    <div className="relative"
+          ref={ref}>
       <button
             onClick={()=> setIsShow(!isShow)}
-            className='flex items-center gap-1'>
+            className='flex items-center gap-1 hoverPrimary'>
                 {currentValue}
-                <ChevronDown/>
+                <ChevronUp/>
         </button>
-      <ul ref={ref}
+        {isShow && (
+      <ul 
           className='bg-dark-600 py-2 px-4 rounded absolute bottom-full right-0 z-10 mb-2'>
         {QUALITIES.map(quality => (
             <li key={quality}
@@ -36,7 +38,7 @@ export function SelectQuality({currentValue, onChange}: IProps){
                     onChange(quality)
                     setIsShow(false)
                 }}
-                className={cn('flex items-center gap-1',{
+                className={cn('flex items-center gap-1 hoverPrimary',{
                     'font-bold text-primary': currentValue === quality
                 })}
            >
@@ -46,6 +48,7 @@ export function SelectQuality({currentValue, onChange}: IProps){
         ))
         }
       </ul>
+      )}
     </div>
     )
 }

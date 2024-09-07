@@ -1,7 +1,9 @@
-import { Player } from "@/player/Player";
+import { Player } from "@/player/Player"
+
 export default function Home() {
+
   return (
-  <div>
+  <div className="flex items-center justify-center h-screen">
     <Player/>
   </div>
   );

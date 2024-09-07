@@ -19,7 +19,7 @@ export function Player(){
     } = usePlayer()
     
     return(
-        <div className="max-w-xl mx-auto relative rounded-lg overflow-hidden">
+        <div className="max-w-4xl mx-auto relative rounded-lg overflow-hidden">
             <video 
               ref={playerRef}
               className='w-full h-full object-cover'
@@ -27,19 +27,25 @@ export function Player(){
               src='/scorpions.mp4'
             />
             <div className="flex items-center justify-between p-3 bg-dark-700">
-                <div>
-                <button onClick={togglePlayPause}>
+              <div className="flex items-center gap-3">
+                <button onClick={togglePlayPause}
+                        className='hoverPrimary'>
                  {isPlaying ? <Pause/> : <Play/>}
                 </button> 
-                <button onClick={()=> skipTime('backward')}>
+                <button onClick={()=> skipTime('backward')}
+                        className='hoverPrimary'>
                     <RotateCcw/>
                 </button>
-                <button onClick={()=> skipTime('forward')}>
+                <button onClick={()=> skipTime('forward')}
+                        className='hoverPrimary'>
                     <RotateCw/>
                 </button>
                 </div>
-               <div>
-                <SelectQuality currentValue={quality} onChange={changeQuality}/>
+               <div className="flex items-center gap-3">
+                <SelectQuality 
+                        currentValue={quality} 
+                        onChange={changeQuality}
+                        />
                 <button onClick={toggleFullScreen}>
                  <Maximize/>
                 </button>
