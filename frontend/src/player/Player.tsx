@@ -2,10 +2,12 @@
 
 import { Maximize, RotateCw } from "lucide-react"
 import { usePlayer } from "./usePlayer"
-import { Play, Pause, RotateCcw} from 'lucide-react'
+import { Play, Pause, RotateCcw } from 'lucide-react'
 import { SelectQuality } from "./SelectQuality"
+import { ProgressBar } from "./ProgressBar"
+import { useEffect, useState } from "react"
 
-export function Player(){
+export function Player() {
     const player = usePlayer()
     console.log('usePlayer result:', player)
     const {
@@ -17,39 +19,56 @@ export function Player(){
         togglePlayPause,
         toggleFullScreen
     } = usePlayer()
-    
-    return(
+
+    const [currentTime, setCurrentTime] = useState(0)
+    const [videoTime, setVideoTime] = useState(0)
+    const [progress, setProgress] = useState(0)
+
+    useEffect(() => {
+        const originalTime = playerRef.current?.duration
+        if(originalTime) setVideoTime(originalTime)
+    }, [playerRef.current?.duration])
+
+    useEffect(() => {
+
+    })
+
+    return (
         <div className="max-w-4xl mx-auto relative rounded-lg overflow-hidden">
-            <video 
-              ref={playerRef}
-              className='w-full h-full object-cover'
-              controls={false}
-              src='/scorpions.mp4'
+            <video
+                ref={playerRef}
+                className='w-full h-full aspect-video'
+                controls={false}
+                src='/scorpions.mp4#t=6'
+                preload="metadata"
             />
             <div className="flex items-center justify-between p-3 bg-dark-700">
-              <div className="flex items-center gap-3">
-                <button onClick={togglePlayPause}
+                <ProgressBar progress={1}/>
+                <div className="flex items-center gap-3">
+                    <button onClick={togglePlayPause}
                         className='hoverPrimary'>
-                 {isPlaying ? <Pause/> : <Play/>}
-                </button> 
-                <button onClick={()=> skipTime('backward')}
+                        {isPlaying ? <Pause /> : <Play />}
+                    </button>
+                    <button 
+                        onClick={() => skipTime('backward')}
                         className='hoverPrimary'>
-                    <RotateCcw/>
-                </button>
-                <button onClick={()=> skipTime('forward')}
+                        <RotateCcw />
+                    </button>
+                    <button 
+                        onClick={() => skipTime('forward')}
                         className='hoverPrimary'>
-                    <RotateCw/>
-                </button>
+                        <RotateCw />
+                    </button>
                 </div>
-               <div className="flex items-center gap-3">
-                <SelectQuality 
-                        currentValue={quality} 
+                <div className="flex items-center gap-3">
+                    <SelectQuality
+                        currentValue={quality}
                         onChange={changeQuality}
-                        />
-                <button onClick={toggleFullScreen}>
-                 <Maximize/>
-                </button>
-               </div>
+                    />
+                    <button onClick={toggleFullScreen}>
+                        <Maximize />
+                    </button>
+                </div>
             </div>
         </div>
     )
