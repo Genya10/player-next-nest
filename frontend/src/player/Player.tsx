@@ -5,7 +5,6 @@ import { usePlayer } from "./usePlayer"
 import { Play, Pause, RotateCcw } from 'lucide-react'
 import { SelectQuality } from "./SelectQuality"
 import { ProgressBar } from "./ProgressBar"
-import { useEffect, useState } from "react"
 
 export function Player() {
     const player = usePlayer()
@@ -17,21 +16,11 @@ export function Player() {
         quality,
         skipTime,
         togglePlayPause,
-        toggleFullScreen
+        toggleFullScreen,
+        progress,
+        currentTime,
+        videoTime
     } = usePlayer()
-
-    const [currentTime, setCurrentTime] = useState(0)
-    const [videoTime, setVideoTime] = useState(0)
-    const [progress, setProgress] = useState(0)
-
-    useEffect(() => {
-        const originalTime = playerRef.current?.duration
-        if(originalTime) setVideoTime(originalTime)
-    }, [playerRef.current?.duration])
-
-    useEffect(() => {
-
-    })
 
     return (
         <div className="max-w-4xl mx-auto relative rounded-lg overflow-hidden">
@@ -42,8 +31,8 @@ export function Player() {
                 src='/scorpions.mp4#t=6'
                 preload="metadata"
             />
-            <div className="flex items-center justify-between p-3 bg-dark-700">
-                <ProgressBar progress={1}/>
+            <div className="flex items-center justify-between p-3 bg-dark-700 relative">
+                <ProgressBar progress={progress}/>
                 <div className="flex items-center gap-3">
                     <button onClick={togglePlayPause}
                         className='hoverPrimary'>

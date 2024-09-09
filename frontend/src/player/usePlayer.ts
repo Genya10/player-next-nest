@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect} from "react"
 import { EnumPlayerQuality, HTMLCustomVideoElement } from "./playertypes"
 
 const SKIP_SECONDS_TIME = 15
@@ -53,6 +53,38 @@ export function usePlayer(){
         setIsPlaying(true)
     }
 
+    const [currentTime, setCurrentTime] = useState(0)
+    const [videoTime, setVideoTime] = useState(0)
+    const [progress, setProgress] = useState(0)
+
+    useEffect(() => {
+        const originalTime = playerRef.current?.duration
+        if(originalTime){
+          setVideoTime(originalTime)
+
+          const currentTime = playerRef.current.currentTime
+          const duration = playerRef.current.duration
+          setCurrentTime(currentTime)         
+          setProgress((currentTime / duration) * 100) 
+        }        
+    }, [playerRef.current?.duration])
+
+    useEffect(() => {
+        const updateProgress = () => {
+            if(!playerRef?.current) return
+
+            const currentTime = playerRef.current.currentTime
+            const duration = playerRef.current.duration
+            setCurrentTime(currentTime)            
+            setProgress((currentTime / duration) * 100)
+        }
+        playerRef.current?.addEventListener('timeupdate', updateProgress)
+
+        return () => {
+          playerRef.current?.removeEventListener('timeupdate', updateProgress)
+        }
+    },[])
+
     return {
         playerRef,
         isPlaying,
@@ -60,6 +92,9 @@ export function usePlayer(){
         togglePlayPause,
         skipTime,
         toggleFullScreen,
-        changeQuality
+        changeQuality,
+        progress,
+        currentTime,
+        videoTime
     }
 }
