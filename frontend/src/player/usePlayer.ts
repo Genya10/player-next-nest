@@ -57,33 +57,26 @@ export function usePlayer(){
     const [videoTime, setVideoTime] = useState(0)
     const [progress, setProgress] = useState(0)
 
-    useEffect(() => {
-        const originalTime = playerRef.current?.duration
-        if(originalTime){
-          setVideoTime(originalTime)
-
-          const currentTime = playerRef.current.currentTime
-          const duration = playerRef.current.duration
-          setCurrentTime(currentTime)         
-          setProgress((currentTime / duration) * 100) 
-        }        
-    }, [playerRef.current?.duration])
+    const updateProgress = () => {
+        if (!playerRef.current) return
+        const currentTime = playerRef.current.currentTime
+        const duration = playerRef.current.duration
+        setCurrentTime(currentTime)
+        setProgress((currentTime / duration) * 100)
+    }
 
     useEffect(() => {
-        const updateProgress = () => {
-            if(!playerRef?.current) return
+        if (!playerRef.current) return
+        setVideoTime(playerRef.current.duration) // Сохраним общее время видео
 
-            const currentTime = playerRef.current.currentTime
-            const duration = playerRef.current.duration
-            setCurrentTime(currentTime)            
-            setProgress((currentTime / duration) * 100)
-        }
-        playerRef.current?.addEventListener('timeupdate', updateProgress)
+        // Обновляем прогресс при каждом обновлении времени
+        playerRef.current.addEventListener('timeupdate', updateProgress)
 
+        // Чистим слушатель при размонтировании компонента
         return () => {
-          playerRef.current?.removeEventListener('timeupdate', updateProgress)
+            playerRef.current?.removeEventListener('timeupdate', updateProgress)
         }
-    },[])
+    }, [playerRef.current?.duration])
 
     return {
         playerRef,

@@ -32,31 +32,48 @@ export function Player() {
                 preload="metadata"
             />
             <div className="flex items-center justify-between p-3 bg-dark-700 relative">
-                <ProgressBar progress={progress}/>
-                <div className="flex items-center gap-3">
-                    <button onClick={togglePlayPause}
-                        className='hoverPrimary'>
-                        {isPlaying ? <Pause /> : <Play />}
-                    </button>
-                    <button 
-                        onClick={() => skipTime('backward')}
-                        className='hoverPrimary'>
-                        <RotateCcw />
-                    </button>
-                    <button 
-                        onClick={() => skipTime('forward')}
-                        className='hoverPrimary'>
-                        <RotateCw />
-                    </button>
-                </div>
-                <div className="flex items-center gap-3">
-                    <SelectQuality
-                        currentValue={quality}
-                        onChange={changeQuality}
-                    />
-                    <button onClick={toggleFullScreen}>
-                        <Maximize />
-                    </button>
+                <ProgressBar progress={progress} />
+                <div className="flex gap-3">
+                    <div className="flex items-center gap-3">
+                        <button onClick={togglePlayPause}
+                            className='hoverPrimary'>
+                            {isPlaying ? <Pause /> : <Play />}
+                        </button>
+
+                        <button
+                            onClick={() => skipTime('backward')}
+                            className='hoverPrimary'>
+                            <RotateCcw />
+                        </button>
+                        <button
+                            onClick={() => skipTime('forward')}
+                            className='hoverPrimary'>
+                            <RotateCw />
+                        </button>
+                    </div>
+                    <div className="flex items-center gap-1 border-l pl-1 border-white/50">
+                        <span>
+                            {Math.floor(currentTime / 60) +
+                                ':' +
+                                ('0' + Math.floor(currentTime % 60)).slice(-2)}
+                        </span>
+                        <span>/</span>
+                        <span>
+                            {Math.floor(videoTime / 60) +
+                                ':' +
+                                ('0' + Math.floor(videoTime % 60)).slice(-2)}
+                        </span>
+                    </div>
+                </div><div>
+                    <div className="flex items-center gap-3">
+                        <SelectQuality
+                            currentValue={quality}
+                            onChange={changeQuality}
+                        />
+                        <button onClick={toggleFullScreen}>
+                            <Maximize />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
