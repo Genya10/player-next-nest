@@ -64,7 +64,8 @@ export function Player() {
                                 ('0' + Math.floor(videoTime % 60)).slice(-2)}
                         </span>
                     </div>
-                </div><div>
+                </div>
+                <div>
                     <div className="flex items-center gap-3">
                         <SelectQuality
                             currentValue={quality}

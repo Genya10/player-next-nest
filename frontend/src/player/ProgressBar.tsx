@@ -1,5 +1,4 @@
 export function ProgressBar({progress}: {progress:number}) {
-  console.log(progress)
 
     return (
         <div className="absolute -top-0.5 left-0 w-full bg-dark-100" >
