@@ -11,7 +11,7 @@ export default function UploadVideoPage() {
         formData.append('video', data.video[0])
 
         try {
-            const response = await fetch('/upload', {
+            const response = await fetch('http://localhost:4200/api/upload', {
                 method: 'POST',
                 body: formData
             })
