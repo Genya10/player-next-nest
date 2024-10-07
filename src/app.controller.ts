@@ -1,8 +1,8 @@
-import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, UploadedFile, UseInterceptors, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as multer from 'multer';
-import path from 'path'
+import * as path from 'path'
 
 @Controller('/api/upload')
 export class AppController {
