@@ -2,11 +2,15 @@
 
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { IFormInput } from './types'
+import { useState } from 'react'
 
 export default function UploadVideoPage() {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>()
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        setIsLoading(true)
         const formData = new FormData()
         formData.append('video', data.video[0])
 
@@ -22,6 +26,8 @@ export default function UploadVideoPage() {
             }
         } catch (error) {
             console.log('Error uploading video:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -43,8 +49,8 @@ export default function UploadVideoPage() {
                     </span>
                 )}
             </div>
-            <button className='bg-primary p-5 py-2 rounded-xl'>
-                Upload
+            <button className='bg-primary p-5 py-2 rounded-xl' disabled={isLoading}>
+                {isLoading ? 'Uploading...' : 'Upload'}
             </button>
         </form>
     )
